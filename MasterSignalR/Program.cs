@@ -49,6 +49,7 @@ namespace MasterSignalR
             app.MapRazorPages();
 
 			app.MapHub<UserHub>("/hubs/userCount");
+            app.MapHub<DeathlyHallowsHub>("hubs/deathyhallows");
 
             app.Run();
         }

@@ -1,22 +1,39 @@
 using System.Diagnostics;
+using MasterSignalR.Hubs;
 using MasterSignalR.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace MasterSignalR.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHubContext<DeathlyHallowsHub> hubContext;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+		public HomeController(ILogger<HomeController> logger, IHubContext<DeathlyHallowsHub> hubContext)
+		{
+			_logger = logger;
+			this.hubContext = hubContext;
+		}
 
-        public IActionResult Index()
+		public IActionResult Index()
         {
             return View();
         }
+
+        public async Task<IActionResult> DeathlyHallows(string type)
+        {
+			if (SD.DealthyHallowRace.ContainsKey(type))
+			{
+				SD.DealthyHallowRace[type]++;
+			}
+			await hubContext.Clients.All.SendAsync("updateDealthyHallowCount",
+			  SD.DealthyHallowRace[SD.Cloak],
+			  SD.DealthyHallowRace[SD.Stone],
+			  SD.DealthyHallowRace[SD.Wand]);
+			return Accepted();
+		}
 
         public IActionResult Privacy()
         {

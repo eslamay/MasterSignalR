@@ -11,7 +11,7 @@ connectionUsersCount.on("updateTotalUsers", (value) => {
 });
 
 function NewWindowLoadedClient() {
-    connectionUsersCount.send("NewWindowLoaded");
+    connectionUsersCount.invoke("NewWindowLoaded");
 }
 
 function fullfilled() {

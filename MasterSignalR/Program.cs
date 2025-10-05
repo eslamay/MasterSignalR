@@ -50,8 +50,11 @@ namespace MasterSignalR
 
 			app.MapHub<UserHub>("/hubs/userCount");
             app.MapHub<DeathlyHallowsHub>("hubs/deathyhallows");
-
-            app.Run();
+            app.MapHub<HouseGroupHub>("/hubs/houseGroup");
+			app.MapHub<NotificationHub>("/hubs/notification");
+			app.MapHub<BasicChatHub>("/hubs/basicchat");
+			app.MapHub<OrderHub>("/hubs/order");
+			app.Run();
         }
     }
 }

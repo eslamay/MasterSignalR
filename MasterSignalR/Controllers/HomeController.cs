@@ -1,9 +1,12 @@
 using MasterSignalR.Data;
 using MasterSignalR.Hubs;
 using MasterSignalR.Models;
+using MasterSignalR.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MasterSignalR.Controllers
 {
@@ -56,6 +59,18 @@ namespace MasterSignalR.Controllers
 		public IActionResult BasicChat()
 		{
 			return View();
+		}
+		[Authorize]
+		public IActionResult Chat()
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			ChatVM chatVm = new()
+			{
+				Rooms = _context.ChatRooms.ToList(),
+				MaxRoomAllowed = 4,
+				UserId = userId,
+			};
+			return View(chatVm);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -54,6 +54,7 @@ namespace MasterSignalR
 			app.MapHub<NotificationHub>("/hubs/notification");
 			app.MapHub<BasicChatHub>("/hubs/basicchat");
 			app.MapHub<OrderHub>("/hubs/order");
+			app.MapHub<ChatHub>("/hubs/chat");
 			app.Run();
         }
     }
